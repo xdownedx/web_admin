@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Загрузка данных из файла
     async function fetchData() {
         try {
-            const response = await fetch('malone_millionaire_app:4080/api/v1/all_step_stats');
+            const response = await fetch('http://malone_millionaire_app:4080/api/v1/all_step_stats');
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

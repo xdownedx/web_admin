@@ -53,7 +53,7 @@ async def stats(request: Request, credentials: HTTPBasicCredentials = Depends(ve
 @app.post("/proxy/")
 async def proxy_post(data: dict = Body(...)):
     # URL вашего внешнего сервера
-    external_url = "malone_millionaire_app:4080/api/v1/send_message_text/"
+    external_url = "http://malone_millionaire_app:4080/api/v1/send_message_text/"
 
     # Отправляем запрос на внешний сервер
     async with httpx.AsyncClient() as client:
