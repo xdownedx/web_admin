@@ -11,7 +11,7 @@ services:
       - PORT=${PORT:-8006}
     networks:
       - mynet
-      - malone_7
+      - malone_8
 
 networks:
   mynet:
