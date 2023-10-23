@@ -100,7 +100,7 @@ async def reqtest():
     # Отправляем запрос на внешний сервер
     async with httpx.AsyncClient() as client:
         response = await client.get(external_url)
-
+    print(response.json())
     # Возвращаем ответ от внешнего сервера
     return response.json()
 if __name__ == "__main__":
