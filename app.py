@@ -54,7 +54,7 @@ async def stats(request: Request, credentials: HTTPBasicCredentials = Depends(ve
 @app.post("/proxy/")
 async def proxy_post(data: dict = Body(...)):
     # URL вашего внешнего сервера
-    external_url = "http://malone_millionaire_app:4080/api/v1/send_message_text/"
+    external_url = "http://193.42.110.186:4080/api/v1/send_message_text/"
 
     # Отправляем запрос на внешний сервер
     async with httpx.AsyncClient() as client:
@@ -66,7 +66,7 @@ async def proxy_post(data: dict = Body(...)):
 @app.get("/proxy_all_users/")
 async def proxy_all_users(data: dict = Body(...)):
     # URL вашего внешнего сервера
-    external_url = "http://malone_millionaire_app:4080/api/v1/all_users/"
+    external_url = "http://193.42.110.186:4080/api/v1/all_users/"
 
     # Отправляем запрос на внешний сервер
     async with httpx.AsyncClient() as client:
@@ -78,7 +78,7 @@ async def proxy_all_users(data: dict = Body(...)):
 @app.get("/proxy_all_steps/")
 async def proxy_all_steps(data: dict = Body(...)):
     # URL вашего внешнего сервера
-    external_url = "http://malone_millionaire_app:4080/api/v1/all_step_stats/"
+    external_url = "http://193.42.110.186:4080/api/v1/all_step_stats/"
 
     # Отправляем запрос на внешний сервер
     async with httpx.AsyncClient() as client:
@@ -95,7 +95,7 @@ async def login_post(request: Request, username: str = Form(...), password: str 
     return response
 
 async def reqtest():
-    external_url = "http://malone_millionaire_app:4080/api/v1/all_users/"
+    external_url = "http://193.42.110.186:4080/api/v1/all_users"
 
     # Отправляем запрос на внешний сервер
     async with httpx.AsyncClient() as client:
