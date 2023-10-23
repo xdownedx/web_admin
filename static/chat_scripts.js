@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchData() {
         try {
             // Изменим URL на ваш API-эндпоинт
-            const response = await fetch('http://malone_millionaire_app:4080/api/v1/all_users');
+            const response = await fetch(window.location.origin + '/proxy_all_users/');
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

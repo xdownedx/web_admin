@@ -62,7 +62,29 @@ async def proxy_post(data: dict = Body(...)):
     # Возвращаем ответ от внешнего сервера
     return response.json()
 
+@app.get("/proxy_all_users/")
+async def proxy_post(data: dict = Body(...)):
+    # URL вашего внешнего сервера
+    external_url = "http://malone_millionaire_app:4080/api/v1/all_users/"
 
+    # Отправляем запрос на внешний сервер
+    async with httpx.AsyncClient() as client:
+        response = await client.get(external_url, json=data)
+
+    # Возвращаем ответ от внешнего сервера
+    return response.json()
+
+@app.get("/proxy_all_steps/")
+async def proxy_post(data: dict = Body(...)):
+    # URL вашего внешнего сервера
+    external_url = "http://malone_millionaire_app:4080/api/v1/all_step_stats/"
+
+    # Отправляем запрос на внешний сервер
+    async with httpx.AsyncClient() as client:
+        response = await client.get(external_url, json=data)
+
+    # Возвращаем ответ от внешнего сервера
+    return response.json()
 @app.post("/login/")
 async def login_post(request: Request, username: str = Form(...), password: str = Form(...)):
     correct_password = users.get(username)
