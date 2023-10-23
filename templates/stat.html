@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Хедер с вкладками -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Админка воронки</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/stat/">Статистика</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/chats/">Чаты</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Статистика</h2>
+    <p>Общее количество пользователей: <span id="totalUsers"></span></p>
+    <canvas id="stepsChart"></canvas>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    // Загрузка данных из файла
+    async function fetchData() {
+        try {
+            const response = await fetch('malone_millionaire_app:4080/api/v1/all_step_stats');
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('There was a problem fetching the data:', error);
+        }
+    }
+
+    const data = await fetchData();
+
+    // Вычисляем общее количество пользователей
+    const totalUsers = data.reduce((sum, step) => sum + step.step_count, 0);
+    document.getElementById('totalUsers').textContent = totalUsers;
+
+    // Создаем график
+    const ctx = document.getElementById('stepsChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(step => `Шаг ${step.step}`),
+            datasets: [{
+                label: 'Количество пользователей',
+                data: data.map(step => step.step_count),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>

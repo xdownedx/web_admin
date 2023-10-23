@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "${PORT:-8006}", "--reload"]
+    ports:
+      - "${PORT:-8006}:${PORT:-8006}"
+    environment:
+      - PORT=${PORT:-8006}
+    networks:
+      - mynet
+      - malone_7
+
+networks:
+  mynet:
+    driver: bridge
+  malone_8:
+    external: true

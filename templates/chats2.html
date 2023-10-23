@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чаты</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/chat_styles.css">
+</head>
+<body>
+    <!-- Хедер с вкладками -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/chats/">Админка воронки</a>
+        <!-- Добавлен кнопка "гамбургер" для отображения меню на мобильных устройствах -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/stat/">Статистика</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/chats/">Чаты</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Модальное окно -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" style="float:right;">&times;</span> <!-- Добавлена кнопка закрытия в верхнем правом углу -->
+            <h4>Информация о пользователе</h4>
+            <p id="userInfo"></p>
+            <button id="closeModal" class="btn btn-secondary">Закрыть</button>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Список пользователей -->
+            <div class="col-md-4">
+                <h4>Пользователи</h4>
+                <ul class="list-group" id="user-list">
+                    <!-- Здесь будут пользователи -->
+                </ul>
+            </div>
+            <!-- Область чата -->
+            <div class="col-md-8">
+                <h4 id="chat-title">Чат</h4>
+                <div id="chat-area" class="border p-3 mb-3" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+                    <!-- Здесь будут сообщения -->
+                </div>
+                <div class="input-group">
+                    <textarea id="message-input" class="form-control" rows="3"></textarea>
+                <div class="input-group-append">
+                    <label class="input-group-text" for="media-input" title="Добавить изображение"><i class="fas fa-paperclip"></i></label>
+                    <input type="file" id="media-input" accept="image/*" style="display: none;">
+                </div>
+                </div>
+                <button id="send-button" class="btn btn-primary mt-3">Отправить</button>
+            </div>
+        </div>
+    </div>
+<script src="/static/chat_scripts.js"></script>
+
+<script>
+    // Добавлен обработчик событий для кнопки закрытия модального окна
+    document.querySelector('.close-button').addEventListener('click', function() {
+        document.getElementById('userModal').style.display = 'none';
+    });
+</script>
+</body>
+</html>
