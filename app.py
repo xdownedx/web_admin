@@ -105,5 +105,4 @@ async def reqtest():
     return response.json()
 if __name__ == "__main__":
     import uvicorn
-    asyncio.run(reqtest())
     uvicorn.run(app, host="0.0.0.0", port=8000)
