@@ -63,7 +63,7 @@ async def proxy_post(data: dict = Body(...)):
     return response.json()
 
 @app.get("/proxy_all_users/")
-async def proxy_post(data: dict = Body(...)):
+async def proxy_all_users(data: dict = Body(...)):
     # URL вашего внешнего сервера
     external_url = "http://malone_millionaire_app:4080/api/v1/all_users/"
 
@@ -75,7 +75,7 @@ async def proxy_post(data: dict = Body(...)):
     return response.json()
 
 @app.get("/proxy_all_steps/")
-async def proxy_post(data: dict = Body(...)):
+async def proxy_all_steps(data: dict = Body(...)):
     # URL вашего внешнего сервера
     external_url = "http://malone_millionaire_app:4080/api/v1/all_step_stats/"
 
