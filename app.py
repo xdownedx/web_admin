@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from starlette.requests import Request
 import secrets
+import asyncio
 from fastapi.responses import RedirectResponse
 from fastapi import Form
 import httpx
@@ -57,7 +58,7 @@ async def proxy_post(data: dict = Body(...)):
 
     # Отправляем запрос на внешний сервер
     async with httpx.AsyncClient() as client:
-        response = await client.post(external_url, json=data)
+        response = await client.post(external_url)
 
     # Возвращаем ответ от внешнего сервера
     return response.json()
@@ -69,7 +70,7 @@ async def proxy_all_users(data: dict = Body(...)):
 
     # Отправляем запрос на внешний сервер
     async with httpx.AsyncClient() as client:
-        response = await client.get(external_url, json=data)
+        response = await client.get(external_url)
 
     # Возвращаем ответ от внешнего сервера
     return response.json()
@@ -93,6 +94,16 @@ async def login_post(request: Request, username: str = Form(...), password: str 
     response = RedirectResponse(url="/chats/", status_code=200)
     return response
 
+async def reqtest():
+    external_url = "http://malone_millionaire_app:4080/api/v1/all_users/"
+
+    # Отправляем запрос на внешний сервер
+    async with httpx.AsyncClient() as client:
+        response = await client.get(external_url)
+
+    # Возвращаем ответ от внешнего сервера
+    return response.json()
 if __name__ == "__main__":
     import uvicorn
+    asyncio.run(reqtest())
     uvicorn.run(app, host="0.0.0.0", port=8000)
