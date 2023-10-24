@@ -54,7 +54,7 @@ async def stats(request: Request, credentials: HTTPBasicCredentials = Depends(ve
 @app.post("/proxy_send_message/")
 async def proxy_post(data: dict = Body(...)):
     print(data)
-    response = requests.post(url="http://malone_millionaire_app:4080/api/v1/send_message_text", data=data, headers={'Content-Type':'application/json'})
+    response = requests.post(url="http://malone_millionaire_app:4080/api/v1/send_message_text", data=data)
     print(response.json())
     return response.json()
 
