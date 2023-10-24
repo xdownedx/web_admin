@@ -132,8 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
             user.messages.push({ from: "admin", text: text, media: null, timestamp: new Date().toISOString() });
             loadChat(selectedUser);
 
-            // Здесь мы используем текущий домен и добавляем к нему /proxy/
-            const proxyURL = window.location.origin + '/proxy/';
+            const proxyURL = window.location.origin + '/proxy_send_message/';
 
             fetch(proxyURL, {
                 method: 'POST',
