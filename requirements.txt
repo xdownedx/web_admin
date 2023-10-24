@@ -3,4 +3,5 @@ uvicorn
 fastapi
 python-multipart
 requests
+json
 jinja2
