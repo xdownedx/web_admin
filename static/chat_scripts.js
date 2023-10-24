@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('chat-area').addEventListener('drop', dropHandler);
     document.getElementById('chat-area').addEventListener('dragover', dragOverHandler);
-    setInterval(checkForNewMessages, 1000);
+    setInterval(checkForNewMessages, 3000);
 
     // Инициализация
     fetchData().then(fetchedUsers => {
