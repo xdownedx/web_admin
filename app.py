@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from starlette.requests import Request
 import secrets
-import asyncio
+import requests
 from fastapi.responses import RedirectResponse
 from fastapi import Form
 import httpx
@@ -53,38 +53,19 @@ async def stats(request: Request, credentials: HTTPBasicCredentials = Depends(ve
 
 @app.post("/proxy/")
 async def proxy_post(data: dict = Body(...)):
-    # URL вашего внешнего сервера
-    external_url = "http://193.42.110.186:4080/api/v1/send_message_text/"
-
-    # Отправляем запрос на внешний сервер
+    external_url = "http://malone_millionaire_app:4080/api/v1/send_message_text/"
     async with httpx.AsyncClient() as client:
-        response = await client.post(external_url)
-
-    # Возвращаем ответ от внешнего сервера
+        response = await client.post(external_url, data=data)
     return response.json()
 
 @app.get("/proxy_all_users/")
-async def proxy_all_users(data: dict = Body(...)):
-    # URL вашего внешнего сервера
-    external_url = "http://193.42.110.186:4080/api/v1/all_users/"
-
-    # Отправляем запрос на внешний сервер
-    async with httpx.AsyncClient() as client:
-        response = await client.get(external_url)
-
-    # Возвращаем ответ от внешнего сервера
+async def proxy_all_users():
+    response = requests.get(url="http://malone_millionaire_app:4080/api/v1/all_users")
     return response.json()
 
 @app.get("/proxy_all_steps/")
-async def proxy_all_steps(data: dict = Body(...)):
-    # URL вашего внешнего сервера
-    external_url = "http://193.42.110.186:4080/api/v1/all_step_stats/"
-
-    # Отправляем запрос на внешний сервер
-    async with httpx.AsyncClient() as client:
-        response = await client.get(external_url, json=data)
-
-    # Возвращаем ответ от внешнего сервера
+async def proxy_all_steps():
+    response = requests.get(url="http://malone_millionaire_app:4080/api/v1/all_step_stats")
     return response.json()
 @app.post("/login/")
 async def login_post(request: Request, username: str = Form(...), password: str = Form(...)):
@@ -94,15 +75,7 @@ async def login_post(request: Request, username: str = Form(...), password: str 
     response = RedirectResponse(url="/chats/", status_code=200)
     return response
 
-async def reqtest():
-    external_url = "http://193.42.110.186:4080/api/v1/all_users"
 
-    # Отправляем запрос на внешний сервер
-    async with httpx.AsyncClient() as client:
-        response = await client.get(external_url)
-    print(response.json())
-    # Возвращаем ответ от внешнего сервера
-    return response.json()
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
