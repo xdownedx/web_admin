@@ -15,7 +15,7 @@ app = FastAPI()
 print("started")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
-
+base_url = "http://malone_millionaire_app:4085"
 security = HTTPBasic()
 
 # Для простоты, используем жестко заданные логин и пароль.
@@ -54,24 +54,24 @@ async def stats(request: Request, credentials: HTTPBasicCredentials = Depends(ve
 @app.post("/proxy_send_message/")
 async def proxy_post(data: dict = Body(...)):
     print(data)
-    response = requests.post(url="http://malone_millionaire_app:4080/api/v1/send_message_text", data=json.dumps(data), headers={"Content-type":"application/json"})
+    response = requests.post(url=base_url+"/api/v1/send_message_text", data=json.dumps(data), headers={"Content-type":"application/json"})
     print(response.json())
     return response.json()
 
 @app.get("/proxy_all_users/")
 async def proxy_all_users():
-    response = requests.get(url="http://malone_millionaire_app:4080/api/v1/all_users")
+    response = requests.get(url=base_url+"/api/v1/all_users")
     return response.json()
 
 @app.get("/proxy_all_steps/")
 async def proxy_all_steps():
-    response = requests.get(url="http://malone_millionaire_app:4080/api/v1/all_step_stats")
+    response = requests.get(url=base_url+"/api/v1/all_step_stats")
     return response.json()
 
 @app.post("/send_broadcast/")
 async def send_broadcast(data: dict = Body(...)):
     response = requests.post(
-        url="http://malone_millionaire_app:4080/api/v1/send_message_text_by_step",
+        url=base_url+"/api/v1/send_message_text_by_step",
         json=data,
         headers={"Content-Type": "application/json"}
     )
