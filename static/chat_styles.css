@@ -105,3 +105,14 @@
     border: 1px solid #ccc;
     border-radius: 10px;
 }
+#broadcastModal .modal-content {
+    width: 40%; /* Adjust width as needed */
+}
+
+#broadcastModal select, #broadcastModal textarea {
+    margin-bottom: 15px;
+}
+
+#openBroadcastModal {
+    width: 100%; /* This sets the button width to match its parent container */
+}

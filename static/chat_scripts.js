@@ -1,6 +1,71 @@
 document.addEventListener('DOMContentLoaded', function() {
     let selectedUser = null;
 
+
+    async function fetchCategories() {
+        try {
+            const response = await fetch(window.location.origin + '/proxy_all_steps/');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    }
+
+    // Populate category dropdown
+    fetchCategories().then(categories => {
+        const select = document.getElementById('categorySelector');
+        categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category.step;
+            option.textContent = `Шаг ${category.step}`;
+            select.appendChild(option);
+        });
+    });
+
+    // Open Broadcast Modal
+    document.getElementById('openBroadcastModal').addEventListener('click', () => {
+        document.getElementById('broadcastModal').style.display = 'block';
+    });
+
+    // Close Broadcast Modal
+    document.querySelectorAll('.close-button').forEach(button => {
+        button.addEventListener('click', () => {
+            button.closest('.modal').style.display = 'none';
+        });
+    });
+
+    // Send Broadcast Message
+    document.getElementById('sendBroadcast').addEventListener('click', () => {
+        const category = document.getElementById('categorySelector').value;
+        const message = document.getElementById('broadcastMessage').value;
+
+        if (message.trim() === '') {
+            alert('Введите сообщение для рассылки.');
+            return;
+        }
+
+        fetch('/send_broadcast/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ step: category, text: message })
+        }).then(response => response.json())
+        .then(data => {
+            console.log('Broadcast response:', data);
+            // Additional logic based on the response, if needed
+        }).catch(error => console.error('Error:', error));
+
+        // Close the modal after sending the message
+        document.getElementById('broadcastModal').style.display = 'none';
+    });
+
+    // Cancel Broadcast
+    document.getElementById('cancelBroadcast').addEventListener('click', () => {
+        document.getElementById('broadcastModal').style.display = 'none';
+    });
+
     // Загрузка данных из JSON
     async function fetchData() {
         try {

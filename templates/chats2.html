@@ -46,7 +46,9 @@
                 <ul class="list-group" id="user-list">
                     <!-- Здесь будут пользователи -->
                 </ul>
+                <button id="openBroadcastModal" class="btn btn-info mt-3">Рассылка сообщений</button>
             </div>
+
             <!-- Область чата -->
             <div class="col-md-8">
                 <h4 id="chat-title">Чат</h4>
@@ -64,6 +66,20 @@
             </div>
         </div>
     </div>
+
+    <div id="broadcastModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" style="float:right;">&times;</span>
+            <h4>Рассылка сообщений</h4>
+            <select id="categorySelector" class="form-control mb-3">
+                <!-- Categories will be loaded here -->
+            </select>
+            <textarea id="broadcastMessage" class="form-control mb-3" placeholder="Введите сообщение..."></textarea>
+            <button id="sendBroadcast" class="btn btn-primary">Запустить рассылку</button>
+            <button id="cancelBroadcast" class="btn btn-secondary">Отмена</button>
+        </div>
+    </div>
+
 <script src="/static/chat_scripts.js"></script>
 
 <script>
