@@ -67,6 +67,16 @@ async def proxy_all_users():
 async def proxy_all_steps():
     response = requests.get(url="http://malone_millionaire_app:4080/api/v1/all_step_stats")
     return response.json()
+
+@app.post("/send_broadcast/")
+async def send_broadcast(data: dict = Body(...)):
+    response = requests.post(
+        url="http://malone_millionaire_app:4080/api/v1/send_message_text_by_step",
+        json=data,
+        headers={"Content-Type": "application/json"}
+    )
+    return response.json()
+    
 @app.post("/login/")
 async def login_post(request: Request, username: str = Form(...), password: str = Form(...)):
     correct_password = users.get(username)
